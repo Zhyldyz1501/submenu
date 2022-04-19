@@ -5,41 +5,40 @@ import sublinks from './data'
 
 const Sidebar = () => {
     const {isSidebarOpen, closeSidebar} = useGlobalContext()
-  return (
-      <aside className='sidebar'>
-          <button className='close-btn'>
-              <FaTimes/>
+    return (
+      <div
+        className={`${
+          isSidebarOpen ? "sidebar-wrapper show" : "sidebar-wrapper"
+        }`}
+      >
+        <aside className="sidebar">
+          <button className="close-btn" onClick={closeSidebar}>
+            <FaTimes />
           </button>
-          <div className='sidebar-links'>
-              {
-                  sublinks.map((item, index) => {
-                      const { page, links } = item 
+          <div className="sidebar-links">
+            {sublinks.map((item, index) => {
+              const { page, links } = item;
+              return (
+                <article key={index}>
+                  <h4>{page}</h4>
+                  <div className="sidebar-sublinks">
+                    {links.map((link, index) => {
+                      const { url, icon, label } = link;
                       return (
-                          <article key={index}>
-                              <h4>{page}</h4>
-                              <div className='sidebar-sublinks'>
-                                  {
-                                      links.map((link, index) => {
-                                        const {url, icon, label} = link
-                                  return (
-                                  <a key={index} href={url}>
-                                      {icon}
-                                      {label}
-                                  </a>
-                                        )
-                                      })
-                                  }
-
-                              </div>
-                          </article>
-                      )
-                  })
-              }
-
+                        <a key={index} href={url}>
+                          {icon}
+                          {label}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </article>
+              );
+            })}
           </div>
-          
-    </aside>
-  )
+        </aside>
+      </div>
+    );
 }
 
 export default Sidebar
